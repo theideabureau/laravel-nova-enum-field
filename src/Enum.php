@@ -31,6 +31,10 @@ class Enum extends Select
 
         $this->displayUsing(
             function ($value) use ($class) {
+                if ($value instanceof \UnitEnum) {
+                    return $value->name;
+                }
+
                 $parsedValue = $class::tryFrom($value);
                 if ($parsedValue instanceof \UnitEnum) {
                     return $parsedValue->name;

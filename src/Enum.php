@@ -1,6 +1,6 @@
 <?php
 
-namespace Suleymanozev\EnumField;
+namespace TheIdeaBureau\EnumField;
 
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -16,7 +16,6 @@ class Enum extends Select
             }
         );
 
-
         $this->fillUsing(
             function (NovaRequest $request, $model, $attribute, $requestAttribute) {
                 if ($request->exists($requestAttribute)) {
@@ -25,20 +24,30 @@ class Enum extends Select
             }
         );
     }
-    public function attach($class): static
+
+    public function attach($class, $labelMethodName): static
     {
-        $this->options(collect($class::cases())->pluck('name', 'value'));
+        $this->options($class::array());
 
         $this->displayUsing(
-            function ($value) use ($class) {
+            function ($value) use ($class, $labelMethodName) {
                 if ($value instanceof \UnitEnum) {
-                    return $value->name;
+					if ($labelMethodName) {
+	                    return $value->$labelMethodName();
+					}
+
+	            	return $value->name;
                 }
 
                 $parsedValue = $class::tryFrom($value);
                 if ($parsedValue instanceof \UnitEnum) {
+					if ($labelMethodName) {
+	                    return $value->$labelMethodName();
+					}
+
                     return $parsedValue->name;
                 }
+
                 return $value;
             }
         );

@@ -1,5 +1,5 @@
 {
-    "name": "suleymanozev/enum-field",
+    "name": "theideabureau/laravel-nova-enum-field",
     "description": "A Laravel Nova field.",
     "keywords": [
         "laravel",
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Suleymanozev\\EnumField\\": "src/"
+            "TheIdeaBureau\\EnumField\\": "src/"
         }
     },
     "extra": {

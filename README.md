@@ -6,7 +6,7 @@ Nova field for enum in PHP 8.1 and above
 You can install this package in a Laravel app that uses [Nova](https://nova.laravel.com) via composer:
 
 ```bash
-composer require suleymanozev/enum-field
+composer require theideabureau/laravel-nova-enum-field
 ```
 
 ## Setup
@@ -31,7 +31,7 @@ You can use the `Enum` field in your Nova resource like this:
 namespace App\Nova;
 
 use App\Enums\UserType;
-use Suleymanozev\EnumField\Enum;
+use TheIdeaBureau\EnumField\Enum;
 
 class Example extends Resource
 {
@@ -59,7 +59,7 @@ namespace App\Nova;
 
 use App\Enums\UserPermissions;
 use App\Enums\UserType;
-use Suleymanozev\EnumField\EnumFilter;
+use TheIdeaBureau\EnumField\EnumFilter;
 
 class Example extends Resource
 {
@@ -69,7 +69,7 @@ class Example extends Resource
     {
         return [
             EnumFilter::make(__('User Type'), 'user_type', UserType::class),
-                
+
              // With optional default value:
             EnumFilter::make(__('User Type'), 'user_type', UserType::class, UserType::Administrator),
         ];
@@ -84,7 +84,7 @@ namespace App\Nova;
 
 use App\Enums\UserPermissions;
 use App\Enums\UserType;
-use Suleymanozev\EnumField\EnumBooleanFilter;
+use TheIdeaBureau\EnumField\EnumBooleanFilter;
 
 class Example extends Resource
 {
@@ -94,7 +94,7 @@ class Example extends Resource
     {
         return [
             EnumBooleanFilter::make(__('User Type'), 'user_type', UserType::class),
-                
+
             // With optional default values:
             EnumBooleanFilter::make(__('User Type'), 'user_type', UserType::class, [
                 UserType::Administrator,

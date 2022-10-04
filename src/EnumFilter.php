@@ -1,6 +1,6 @@
 <?php
 
-namespace Suleymanozev\EnumField;
+namespace TheIdeaBureau\EnumField;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -12,14 +12,16 @@ class EnumFilter extends Filter
 {
     protected string $column;
     protected string $class;
+    protected string $labelMethodName;
     protected ?\UnitEnum $default = null;
 
-    public function __construct(string $name, string $column, string $class, ?\UnitEnum $default = null)
+    public function __construct(string $name, string $column, string $class, ?\UnitEnum $default = null, string $labelMethodName = null)
     {
         $this->column = $column;
         $this->class = $class;
         $this->default = $default;
         $this->name = $name;
+        $this->labelMethodName = $labelMethodName;
     }
 
     /**
@@ -43,7 +45,11 @@ class EnumFilter extends Filter
      */
     public function options(Request $request): array
     {
-        return collect(call_user_func([$this->class, 'cases']))->pluck('value', 'name')->toArray();
+        return collect(call_user_func([$this->class, 'cases']))
+			->mapWithKeys(function ($case) {
+				return [$case->{$this->labelMethodName}() => $case->value];
+			})
+			->toArray();
     }
 
     public function key(): string

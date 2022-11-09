@@ -42,7 +42,7 @@ class Enum extends Select
                 $parsedValue = $class::tryFrom($value);
                 if ($parsedValue instanceof \UnitEnum) {
 					if ($labelMethodName) {
-	                    return $value->$labelMethodName();
+	                    return $parsedValue->$labelMethodName();
 					}
 
                     return $parsedValue->name;
